@@ -5,7 +5,7 @@
 #include "iomanip"
 using namespace std;
 /**
- * 这题是中规中矩的求最小公倍数，
+ * 这题是中规中矩的求最小公倍数
  * 思路：一般求最小公倍数，就是要先求最大公约数，
  * 用辗转相除法求最大公约数 https://zhidao.baidu.com/question/70215985.html
  * 方法的核心是代码是 while(j!=0) { c=i%j; i=j; j=c; }
@@ -53,4 +53,30 @@ int main(){
         cout << minGongBeiShu << endl;
     }
     return 0;
+}
+
+//以下为求n个正数的最大公约数
+int getMin(int *array, int n){
+    int min = array[0];
+    for (int i = 0; i < n; ++i) {
+        if (array[i] < min)
+            min = array[i];
+    }
+    return min;
+}
+
+int getMaxGongYinShu(int *array, int n){
+    int min = getMin(array, n);
+    int maxGongYinShu = 1;
+    for (int i = 1; i <= min; ++i) {
+        int tag = 0;
+        for (int j = 0; j < n; ++j) {
+            if (array[j]%i == 0)
+                tag++;
+        }
+        if (tag == n){
+            maxGongYinShu = i;
+        }
+    }
+    return maxGongYinShu;
 }
