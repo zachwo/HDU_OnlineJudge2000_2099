@@ -1,3 +1,7 @@
+//
+// Created by 王泽 on 2021/2/23.
+//
+
 #include <iostream>
 #include <algorithm>
 #include "iomanip"
@@ -19,15 +23,15 @@ long long jieCheng(int n){
     }
     return ans;
 }
- /**
-  * 从n个不同元素中每次取出m个不同元素（0≤m≤n）https://baike.baidu.com/item/%E7%BB%84%E5%90%88/12004197
-  * @param n
-  * @param m
-  * @return
-  */
- long long C(int n, int m){
-     return jieCheng(n) / (jieCheng(m) * jieCheng(n-m));
- }
+/**
+ * 从n个不同元素中每次取出m个不同元素（0≤m≤n）https://baike.baidu.com/item/%E7%BB%84%E5%90%88/12004197
+ * @param n
+ * @param m
+ * @return
+ */
+long long C(int n, int m){
+    return jieCheng(n) / (jieCheng(m) * jieCheng(n-m));
+}
 
 int main(){
     int c;

@@ -24,7 +24,7 @@ int main(){
             for (int i = 3; i <= n ; ++i) {
                 d[i] = (i-1)*(d[i-2] + d[i-1]);
             }
-        };
+        }
         //计算n的阶乘（A(n,n)）,即全部排列方法；
         long long total = 1;
         for (int i = 1; i <= n ; ++i) {
