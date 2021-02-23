@@ -1,51 +1,129 @@
 #include <iostream>
-#include <algorithm>
-#include "iomanip"
+#include <iomanip>
+#include <string.h>
+
 using namespace std;
 /*
- * n个灯从左向右、编号从1到n排成一行，
- * 所有灯开始的时候都是关闭的，然后对这一排灯执行一系列操作：
- * 对于第i次操作，编号是i的倍数的灯改变状态（开->关/关->开）
- * 0表示关，1表示开
+ * 看似简单实际没有那么容易
+ * 原因就是高精度问题，如果是超长的数列呢？？？int、long long、double都放不下呢？
+ * 如果含有浮点类型呢？
+ * 所以这道题要用高精度的思想来做：字符串
  *
- * 每次测试用例输入一个数字n表示灯的个数
- * 输出第n个灯经过无限次操作后的状态
+ * 四种情况：
+ * 浮点数和浮点数比较 xxx.xxx vs xxx.xxx
+ * 整数和整数比较 xxx vs xxx
+ * 整数和浮点数比较 xxx vs xxx.xxx
+ * 浮点数和整数比较 xxx.xxx vs xxx
  *
- * 思路1：第n次之后的所有操作均不会再对n号灯及其之前的灯产生影响；
- * 思路2：第n/2次操作之后只有第n次操作会对n号灯产生影响；
+ * 特殊情况：-0 vs 0; -0.000 vs 0
+ * @return
  */
-void switchLamp(int &x){
-    if (x == 0){
-        x = 1;
+ bool isPositive(char &c){
+    if (c == '-'){
+        return false;
+    } else
+        return true;
+ }
+ /**
+  * 判断是否为浮点数
+  * @param str
+  * @param length
+  * @return
+  */
+ bool isFloat(char (&str)[50]){
+//     bool flag = false;
+//     for (int i = 0; i < strlen(str); ++i) {
+//         if (str[i] == '.'){
+//             flag = true;
+//             break;
+//         }
+//     }
+//     return flag;
+    if(strstr(str,".") != NULL){
+        return true;
     } else{
-        x = 0;
+        return false;
     }
-}
-//int main(){
-//    long long n;
-//    while (cin >> n){
-//        int lampN = 0;
-//        for (int i = 1; i <= n; ++i) {
-//            if (n%i == 0){
-//                switchLamp(lampN);
-//            }
-//        }
-//        cout << lampN << endl;
-//    }
-//    return 0;
-//}
-//精简循环版：循环次数直接减少一半
-int main(){
-    long long n;
-    while (cin >> n){
-        int lampN = 0;
-        for (int i = 1; i <= n/2; ++i) {
-            if (n%i == 0){
-                switchLamp(lampN);
+ }
+ /**
+  * 整数和浮点数进行比较的时候，只有整数部分相等，小数部分全为零才相等
+  * @param flo
+  * @param in
+  * @return
+  */
+ bool float_VS_int(char (&flo)[50],char (&in)[50]){
+     if (strlen(flo)<=strlen(in)){
+         if(strcmp(in,"-0") && strcmp(flo,"0.0")){
+             return true;
+         } else{
+             return false;
+         }
+     } else{
+         bool INT = true;
+         bool POINT = true;
+         bool DECIMAL = true;
+         //确定浮点位置:如果两个数相等，那么flo[strlen(in)] == '.';
+         if (flo[strlen(in)] != '.'){
+             POINT = false;
+         }
+         //确定整数部分是否相等
+         for (int i = 0; i < strlen(in); ++i) {
+             if (flo[i] != in[i]){
+                 INT = false;
+                 break;
+             }
+         }
+         //确定小数部分是否全为0
+         for (int i = strlen(in)+1; i < strlen(flo) ; ++i) {
+             if (flo[i] != '0'){
+                 DECIMAL = false;
+                 break;
+             }
+         }
+         if (INT && POINT && DECIMAL){
+             return true;
+         } else{
+             return false;
+         }
+     }
+
+ }
+
+ int main(){
+    char a[50], b[50];
+    while (~scanf("%s %s",a,b)){
+        int lenA = strlen(a);
+        int lenB = strlen(b);
+        int flag = false;
+        //都是整数或者都是浮点数：逐位比较
+        if ( (isFloat(a) && isFloat(b))||
+        (!isFloat(a) && !isFloat(b)) ){
+            if (lenA == lenB){
+                int count = 0;
+                for (int i = 0; i < lenA; ++i) {
+                    if (a[i] == b[i])
+                        count++;
+                }
+                if (count == lenA)
+                    flag = true;
+            } else{
+                if(strcmp(a,"-0")&&strcmp(b,"0") || strcmp(b,"-0")&&strcmp(a,"0"))
+                    flag = true;
+            }
+        } else{
+            if (isFloat(a)){   //a是浮点数，b是整数
+                flag = float_VS_int(a,b);
+            } else{                     //b是浮点数，a是整数
+                flag = float_VS_int(b,a);
             }
         }
-        switchLamp(lampN);
-        cout << lampN << endl;
+
+        if(flag){
+            cout << "YES" << endl;
+        } else{
+            cout << "NO" << endl;
+        }
     }
     return 0;
 }
+
