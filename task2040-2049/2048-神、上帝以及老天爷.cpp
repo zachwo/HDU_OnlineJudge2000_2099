@@ -1,3 +1,7 @@
+//
+// Created by 王泽 on 2021/2/23.
+//
+
 #include <iostream>
 #include <algorithm>
 #include "iomanip"
@@ -18,7 +22,7 @@ int main(){
         long long d[30] = {0,0,1};
         if (n>=3){
             for (int i = 3; i <= n ; ++i) {
-               d[i] = (i-1)*(d[i-2] + d[i-1]);
+                d[i] = (i-1)*(d[i-2] + d[i-1]);
             }
         };
         //计算n的阶乘（A(n,n)）,即全部排列方法；
