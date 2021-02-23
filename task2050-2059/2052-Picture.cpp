@@ -5,10 +5,7 @@
 #include <algorithm>
 #include "iomanip"
 using namespace std;
-/*
- * 将十进制改为二进制
- * 1000 转为二进制： 1111101000，共十位
- */
+
 int main(){
     int n,m;    //n为列，m为行
     while (cin >> n >> m){

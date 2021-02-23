@@ -1,3 +1,6 @@
+//
+// Created by 王泽 on 2021/2/23.
+//
 #include <iostream>
 #include <algorithm>
 #include "iomanip"
@@ -34,6 +37,7 @@ void switchLamp(int &x){
 //    }
 //    return 0;
 //}
+
 //精简循环版：循环次数直接减少一半
 int main(){
     long long n;
@@ -49,3 +53,4 @@ int main(){
     }
     return 0;
 }
+
