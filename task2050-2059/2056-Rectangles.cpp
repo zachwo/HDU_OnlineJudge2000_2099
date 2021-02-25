@@ -47,7 +47,7 @@ int main(){
             minY2 = y3;
             maxY2 = y4;
         }
-        //求出（minX1,maxX1）与（minX2,maxX2）的交集
+        //第二步：求出（minX1,maxX1）与（minX2,maxX2）的交集
         double minX,maxX;
         if (minX1 >= maxX2 || minX2 >= maxX1){
             minX = maxX = 0.0;  //x轴区间没交集
@@ -63,7 +63,7 @@ int main(){
                 maxX = maxX1;
             }
         }
-        //求出（minY1,maxY1）与（minY2,maxY2）的交集
+        //第三步：求出（minY1,maxY1）与（minY2,maxY2）的交集
         double minY,maxY;
         if (minY1 >= maxY2 || minY2 >= maxY1){
             minX = maxX = 0.0;  //y轴区间没交集
