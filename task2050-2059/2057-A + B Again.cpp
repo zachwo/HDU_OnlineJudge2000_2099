@@ -1,3 +1,6 @@
+//
+// Created by 王泽 on 2021/2/25.
+//
 #include <iostream>
 #include <iomanip>
 #include <algorithm>
@@ -6,6 +9,7 @@ using namespace std;
  * 输入两个16进制数A，B
  * 计算A+B,并以16进制输出
  */
+//将16进制每位字符转为整数类型；
 int change(char &c){
     int ans;
     switch (c) {
@@ -28,6 +32,7 @@ int change(char &c){
     }
     return ans;
 }
+//将16进制数转为10进制数
 long long sixteenToTen(char A[]){
     long long ans = 0;
     int x = 0;
@@ -36,6 +41,7 @@ long long sixteenToTen(char A[]){
         ans += t * pow(16,x);
         x++;
     }
+    //左起第一位单独处理
     if (A[0] == '+'){
         ans *= 1;
     } else if(A[0] == '-'){
@@ -85,10 +91,11 @@ int main(){
             sum /= 16;
             i++;
         }
-        for (int j = i-1; j >=0 ; --j) {
+        for (int j = i-1; j >= 0; --j) {
             cout << str[j];
         }
         cout << endl;
     }
     return 0;
 }
+
